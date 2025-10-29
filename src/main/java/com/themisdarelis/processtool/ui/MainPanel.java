@@ -1,17 +1,17 @@
 package com.themisdarelis.processtool.ui;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.TableCellRenderer;
-import java.awt.Font;
+import javax.swing.border.EmptyBorder;
+
 import java.util.ArrayList;
 import com.themisdarelis.processtool.model.ProcessInfo;
 
 public class MainPanel extends JPanel {
     public MainPanel() {
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(new JLabel("Welcome to Process Tool"));
-        this.add(new JButton("Start Process"));
+        setBorder(new EmptyBorder(24, 32, 24, 32));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(new JLabel("Welcome to Process Tool"));
+        add(new JButton("Start Process"));
 
         ArrayList<ProcessInfo> processList = new ArrayList<>();
         //παρε τα προσεσις
@@ -28,15 +28,8 @@ public class MainPanel extends JPanel {
         // δημιουργία μοντέλου πίνακα και πίνακα
         ProcessInfoTableModel tableModel = new ProcessInfoTableModel(processList);
         JTable processTable = new JTable(tableModel);
-
-        //fonst staff
-        Font largeFont = new Font("SansSerif", Font.PLAIN, 24);
-        processTable.setFont(largeFont);
         processTable.setRowHeight(32);
-        TableCellRenderer renderer = processTable.getDefaultRenderer(Object.class);
-        if (renderer instanceof DefaultTableCellRenderer) {
-            ((DefaultTableCellRenderer) renderer).setFont(largeFont);
-        }
+        processTable.setRowSelectionAllowed(true);
         JScrollPane scrollPane = new JScrollPane(processTable);
         this.add(scrollPane);
     }
