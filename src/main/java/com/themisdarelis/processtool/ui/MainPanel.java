@@ -1,31 +1,44 @@
 package com.themisdarelis.processtool.ui;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableCellRenderer;
+import java.awt.Font;
+import java.util.ArrayList;
+import com.themisdarelis.processtool.model.ProcessInfo;
 
 public class MainPanel extends JPanel {
-        String string1 = "";
-
     public MainPanel() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(new JLabel("Welcome to Process Tool"));
         this.add(new JButton("Start Process"));
 
-
-        var processdata = new JTextArea(20, 50);
-        processdata.setEditable(false);
-        this.add(processdata);
-        // Stream all processes
-        StringBuilder processInfo = new StringBuilder();
-
+        ArrayList<ProcessInfo> processList = new ArrayList<>();
+        //παρε τα προσεσις
         ProcessHandle.allProcesses().forEach(process -> {
             ProcessHandle.Info info = process.info();
             String command = info.command().orElse("unknown");
             String user = info.user().orElse("unknown");
-            processInfo.append(String.format("Command: %s | PID: %d | User: %s%n",
-                command, process.pid(), user));
+            //καλυτερα οχι τα ρουτ προσεσις, μπορει να γινει ζημια!
+            if (!user.equals("root")) {
+                processList.add(new ProcessInfo(command, process.pid(), user));
+            }
         });
 
-        processdata.setText(processInfo.toString());
+        // δημιουργία μοντέλου πίνακα και πίνακα
+        ProcessInfoTableModel tableModel = new ProcessInfoTableModel(processList);
+        JTable processTable = new JTable(tableModel);
+
+        //fonst staff
+        Font largeFont = new Font("SansSerif", Font.PLAIN, 24);
+        processTable.setFont(largeFont);
+        processTable.setRowHeight(32);
+        TableCellRenderer renderer = processTable.getDefaultRenderer(Object.class);
+        if (renderer instanceof DefaultTableCellRenderer) {
+            ((DefaultTableCellRenderer) renderer).setFont(largeFont);
+        }
+        JScrollPane scrollPane = new JScrollPane(processTable);
+        this.add(scrollPane);
     }
 
 }

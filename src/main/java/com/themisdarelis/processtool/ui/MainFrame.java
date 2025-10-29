@@ -9,7 +9,7 @@ public class MainFrame extends JFrame {
         JPanel mainPanel = new MainPanel();
         super("Process Tool");
         setResizable(true);
-        setSize(720, 480);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setVisible(true);
