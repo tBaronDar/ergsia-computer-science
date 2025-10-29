@@ -6,7 +6,7 @@
 
   <groupId>com.themisdarelis.processtool</groupId>
   <artifactId>processtool</artifactId>
-  <version>0.1</version>
+  <version>0.2</version>
 
   <name>processtool</name>
   <!-- FIXME change it to the project's website -->
@@ -51,6 +51,13 @@
         <plugin>
           <artifactId>maven-jar-plugin</artifactId>
           <version>3.0.2</version>
+          <configuration>
+            <archive>
+              <manifest>
+                <mainClass>com.themisdarelis.processtool.App</mainClass>
+              </manifest>
+            </archive>
+          </configuration>
         </plugin>
         <plugin>
           <artifactId>maven-install-plugin</artifactId>
