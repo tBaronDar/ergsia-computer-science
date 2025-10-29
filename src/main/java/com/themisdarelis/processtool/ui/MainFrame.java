@@ -1,10 +1,12 @@
 package com.themisdarelis.processtool.ui;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 
 public class MainFrame extends JFrame {
     public MainFrame() {
+        JPanel mainPanel = new MainPanel();
         super("Process Tool");
         setResizable(true);
         setSize(720, 480);
@@ -13,6 +15,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
 
 
-        this.add(new MainPanel());
+
+        setContentPane(mainPanel);
     }
 }

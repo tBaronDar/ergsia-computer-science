@@ -1,4 +1,5 @@
 package com.themisdarelis.processtool;
+
 import com.themisdarelis.processtool.ui.MainFrame;
 
 public class App

@@ -1,7 +1,5 @@
 package com.themisdarelis.processtool.ui;
 
-import java.util.stream.Stream;
-
 import javax.swing.*;
 
 public class MainPanel extends JPanel {
@@ -17,18 +15,17 @@ public class MainPanel extends JPanel {
         processdata.setEditable(false);
         this.add(processdata);
         // Stream all processes
-        Stream<ProcessHandle> processes = ProcessHandle.allProcesses();
+        StringBuilder processInfo = new StringBuilder();
 
-        processes.forEach(process -> {
+        ProcessHandle.allProcesses().forEach(process -> {
             ProcessHandle.Info info = process.info();
-            System.out.printf("PID: %d, Command: %s, User: %s%n",
-                    process.pid(),
-                    info.command().orElse("unknown"),
-                    info.user().orElse("unknown"));
-                    string1 = info.command().orElse("unknown") + " (PID: " + process.pid() + ")\n";
+            String command = info.command().orElse("unknown");
+            String user = info.user().orElse("unknown");
+            processInfo.append(String.format("Command: %s | PID: %d | User: %s%n",
+                command, process.pid(), user));
         });
 
-        processdata.setText(string1);
+        processdata.setText(processInfo.toString());
     }
 
 }
